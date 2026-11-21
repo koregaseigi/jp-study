@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>일본어 뉘앙스 단어장</title>
+<meta name="description" content="일본어 단어의 뉘앙스·예문·헷갈리는 단어를 정리한 단어장">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* layout: one reading column of word entries; headword left in mincho, notes stacked under it */
+:root{
+  --paper:#eef1f4; --sheet:#ffffff; --ink:#1b2430; --soft:#5b6877; --line:#d5dbe2;
+  --ai:#27408b; --ai-wash:#e4e9f7; --mark:#ffe27a;
+  --display:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12161c; --sheet:#1a2029; --ink:#e6eaf0; --soft:#97a3b2; --line:#2c3541;
+    --ai:#9db4ff; --ai-wash:#232c44; --mark:#6b5a12; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12161c; --sheet:#1a2029; --ink:#e6eaf0; --soft:#97a3b2; --line:#2c3541;
+  --ai:#9db4ff; --ai-wash:#232c44; --mark:#6b5a12; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 64px;display:flex;flex-direction:column;gap:16px}
+header h1{font-family:var(--display);font-weight:900;font-size:26px;margin:0;letter-spacing:.02em}
+header p{margin:2px 0 0;color:var(--soft);font-size:14px}
+.tools{position:sticky;top:0;z-index:2;background:var(--paper);padding:8px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#q{flex:1 1 180px;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink)}
+.tog{font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink);cursor:pointer}
+.tog[aria-pressed="true"]{background:var(--ai);border-color:var(--ai);color:var(--sheet)}
+#q:focus-visible,.tog:focus-visible,.jump:focus-visible,.veil:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+#list{display:flex;flex-direction:column;gap:12px}
+.entry{background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--ai);border-radius:6px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:70px}
+.entry.flash{box-shadow:0 0 0 3px var(--mark)}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.w{font-family:var(--display);font-weight:900;font-size:34px;line-height:1.25}
+.r{font-family:var(--display);font-size:18px;color:var(--ai)}
+.m{font-weight:600;font-size:17px;flex-basis:100%}
+.veil{font:inherit;border:1px dashed var(--soft);border-radius:6px;background:transparent;color:var(--soft);padding:0 12px;cursor:pointer;font-size:14px}
+.nuance{margin:0;background:var(--ai-wash);border-radius:6px;padding:10px 12px}
+.sec{display:flex;flex-direction:column;gap:6px}
+.sec h3{margin:0;font-size:12px;font-weight:600;color:var(--soft);letter-spacing:.08em}
+.sec ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ja{font-family:var(--display);font-size:18px;line-height:1.6}
+.ja b{font-weight:900;background:linear-gradient(transparent 62%,var(--mark) 62%)}
+.ko{color:var(--soft);font-size:14px}
+.phr li{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline}
+.phr .ja{font-size:17px}
+.conf li{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline}
+.conf .cw{font-family:var(--display);font-weight:700;font-size:17px}
+.jump{font:inherit;font-family:var(--display);font-weight:700;font-size:17px;background:none;border:0;border-bottom:1.5px solid var(--ai);color:var(--ai);padding:0;cursor:pointer}
+.conf .note{font-size:14.5px;flex:1 1 220px}
+.entry.closed{padding:10px 14px;gap:0}
+.entry.closed .w{font-size:24px}
+.entry.closed .r{font-size:16px}
+.entry.closed .m{font-size:15px;font-weight:500;flex:1 1 120px}
+.head{cursor:pointer}
+.chev{font:inherit;font-size:13px;background:none;border:0;color:var(--soft);cursor:pointer;padding:4px 2px}
+.chev:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-weight:600;background:none;border:0;border-bottom:3px solid transparent;color:var(--soft);padding:8px 12px;cursor:pointer;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ai)}
+.tab span{font-weight:400;font-variant-numeric:tabular-nums}
+.tab:focus-visible,.chk:focus-visible,.pager button:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pager:empty{display:none}
+.pager button{font:inherit;font-size:14px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink);cursor:pointer}
+.pager button:disabled{opacity:.4;cursor:default}
+.pager .where{font-size:14px;color:var(--soft);font-variant-numeric:tabular-nums}
+.head{flex-wrap:nowrap;align-items:flex-start}
+.body{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;flex:1 1 auto;min-width:0}
+.chk{flex:none;width:30px;height:30px;margin-top:4px;border-radius:50%;border:1.5px solid var(--line);background:var(--sheet);color:var(--soft);font-size:15px;line-height:1;cursor:pointer}
+.entry:not(.closed) .chk{margin-top:10px}
+.chk:hover{border-color:var(--ai);color:var(--ai)}
+.side{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:0}
+.num{font-size:12px;color:var(--soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sync{margin:0;font-size:12.5px;color:var(--soft);text-align:center}
+.para{margin:0;font-size:15px}
+.para span{font-size:12px;color:var(--soft);letter-spacing:.08em;margin-right:6px}
+.para b{font-family:var(--display);font-weight:700;font-size:17px}
+.empty{color:var(--soft);padding:24px 0;text-align:center}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}.entry{transition:box-shadow .4s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>뉘앙스 단어장</h1>
+    <p id="count"></p>
+  </header>
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabStudy" role="tab" aria-selected="true">공부 중 <span id="nStudy"></span></button>
+    <button class="tab" id="tabKnown" role="tab" aria-selected="false">외운 단어 <span id="nKnown"></span></button>
+  </div>
+  <div class="tools">
+    <input id="q" type="search" placeholder="단어, 읽기, 뜻으로 검색" autocomplete="off">
+    <button class="tog" id="hideR" aria-pressed="false">읽기 가리기</button>
+    <button class="tog" id="hideM" aria-pressed="false">뜻 가리기</button>
+    <button class="tog" id="all" aria-pressed="false">모두 펼치기</button>
+    <button class="tog" id="shuffle">다시 섞기</button>
+  </div>
+  <nav class="pager" id="pagerTop" aria-label="페이지"></nav>
+  <div id="list"><p class="empty">불러오는 중…</p></div>
+  <nav class="pager" id="pagerBot" aria-label="페이지"></nav>
+  <p class="sync" id="sync"></p>
+</div>
+<script>
+let WORDS = [], have = new Map(), study = [], known = [];
+const PAGE = 50, LS = 'nuance-vocab-progress';
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ui = {hideR:false, hideM:false, all:false, q:'', open:new Set(), tab:'study', kpage:0};
+// what is remembered between visits — this build stores progress in the browser only
+let prog = {seed: Math.floor(Math.random() * 1e9), page: 0, last: '', known: [], t: 0};
+let knownSet = new Set();
+
+function hash(s){ let h = 2166136261; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rebuild(){
+  knownSet = new Set(prog.known);
+  const key = new Map(WORDS.map((d, i) => [i, hash(prog.seed + ':' + d.w)]));
+  const all = WORDS.map((_, i) => i).sort((a, b) => key.get(a) - key.get(b) || a - b);
+  study = all.filter(i => !knownSet.has(WORDS[i].w));
+  known = all.filter(i => knownSet.has(WORDS[i].w));
+}
+function setSync(msg){ $('#sync').textContent = msg; }
+function save(){
+  prog.t = Date.now();
+  try { localStorage.setItem(LS, JSON.stringify(prog)); }
+  catch (e) { setSync('이 브라우저에 진도를 저장할 수 없습니다. 새로고침하면 처음부터 시작됩니다.'); }
+}
+function valid(p){ return p && typeof p.seed === 'number' && Array.isArray(p.known); }
+
+function entry(d, i, n, total){
+  const kanaOnly = d.w === d.r;
+  const r = kanaOnly ? '' : (ui.hideR
+    ? `<button class="veil" data-show="${esc(d.r)}" data-cls="r">읽기 보기</button>`
+    : `<span class="r">${esc(d.r)}</span>`);
+  const m = ui.hideM
+    ? `<button class="veil" data-show="${esc(d.m)}" data-cls="m">뜻 보기</button>`
+    : `<span class="m">${esc(d.m)}</span>`;
+  const open = ui.all || ui.open.has(i);
+  const isKnown = knownSet.has(d.w);
+  const chk = `<button class="chk" data-k="${i}" aria-label="${esc(d.w)} ${isKnown ? '다시 공부 중으로' : '외운 단어로 옮기기'}" title="${isKnown ? '다시 공부' : '외웠음'}">${isKnown ? '↩' : '✓'}</button>`;
+  const head = `<div class="head" data-i="${i}">${chk}<div class="body"><span class="w" lang="ja">${esc(d.w)}</span>${r}${m}</div><div class="side"><span class="num">${n}/${total}</span><button class="chev" aria-expanded="${open}" aria-label="${esc(d.w)} ${open ? '접기' : '펼치기'}">${open ? '접기 ▲' : '▼'}</button></div></div>`;
+  if (!open) return `<article class="entry closed" id="w${i}">${head}</article>`;
+  const ex = d.ex.map(e => `<li><div class="ja" lang="ja">${e[0]}</div><div class="ko">${esc(e[1])}</div></li>`).join('');
+  const phr = (d.phr||[]).map(e => `<li><span class="ja" lang="ja">${esc(e[0])}</span><span class="ko">${esc(e[1])}</span></li>`).join('');
+  const conf = (d.conf||[]).map(e => {
+    const h = have.has(e[0])
+      ? `<button class="jump" lang="ja" data-to="${have.get(e[0])}">${esc(e[0])}</button>`
+      : `<span class="cw" lang="ja">${esc(e[0])}</span>`;
+    return `<li>${h}<span class="note">${esc(e[1])}</span></li>`;
+  }).join('');
+  return `<article class="entry" id="w${i}">
+    ${head}
+    ${d.para ? `<p class="para"><span>바꿔 말하면</span> <b lang="ja">${d.para.map(esc).join(' / ')}</b></p>` : ''}
+    <p class="nuance">${esc(d.nuance)}</p>
+    <div class="sec"><h3>예문</h3><ul>${ex}</ul></div>
+    ${phr ? `<div class="sec phr"><h3>자주 쓰는 표현 · 관용구</h3><ul>${phr}</ul></div>` : ''}
+    ${conf ? `<div class="sec conf"><h3>헷갈리는 단어</h3><ul>${conf}</ul></div>` : ''}
+  </article>`;
+}
+function curList(){ return ui.tab === 'study' ? study : known; }
+function curPage(){ return ui.tab === 'study' ? prog.page : ui.kpage; }
+function setPage(p){ if (ui.tab === 'study'){ prog.page = p; save(); } else ui.kpage = p; }
+function render(){
+  const list = curList(), total = list.length, q = ui.q.trim().toLowerCase();
+  let rows = list.map((i, k) => [i, k + 1]);
+  if (q) rows = rows.filter(([i]) => { const d = WORDS[i];
+    return [d.w, d.r, d.m, d.nuance, ...(d.para||[]), ...(d.conf||[]).map(c => c[0])].join(' ').toLowerCase().includes(q); });
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE));
+  let p = q ? 0 : Math.min(curPage(), pages - 1);
+  const shown = q ? rows.slice(0, 100) : rows.slice(p * PAGE, (p + 1) * PAGE);
+  $('#list').innerHTML = shown.length ? shown.map(([i, n]) => entry(WORDS[i], i, n, total)).join('')
+    : `<p class="empty">${q ? '검색 결과가 없습니다.' : ui.tab === 'study' ? '공부 중인 단어가 없습니다. 전부 외웠어요.' : '아직 외운 단어로 옮긴 것이 없습니다. 단어 왼쪽의 ✓를 누르면 여기로 옵니다.'}</p>`;
+  const pager = (q || rows.length <= PAGE) ? '' :
+    `<button data-p="${p - 1}" ${p === 0 ? 'disabled' : ''}>‹ 이전</button><span class="where">${p * PAGE + 1}–${Math.min((p + 1) * PAGE, total)} / ${total}</span><button data-p="${p + 1}" ${p >= pages - 1 ? 'disabled' : ''}>다음 ›</button>`;
+  $('#pagerTop').innerHTML = pager; $('#pagerBot').innerHTML = pager;
+  $('#nStudy').textContent = study.length; $('#nKnown').textContent = known.length;
+  $('#tabStudy').setAttribute('aria-selected', ui.tab === 'study'); $('#tabKnown').setAttribute('aria-selected', ui.tab === 'known');
+  $('#count').textContent = q ? `검색 결과 ${rows.length}개${rows.length > 100 ? ' (앞 100개 표시)' : ''}` : `전체 ${WORDS.length}단어 · 섞인 순서는 "다시 섞기"를 누를 때까지 유지됩니다`;
+}
+function resume(){
+  if (ui.tab !== 'study' || !prog.last || !have.has(prog.last)) return;
+  const t = document.getElementById('w' + have.get(prog.last));
+  if (!t) return;
+  t.scrollIntoView({block:'center'}); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1500);
+}
+$('#q').addEventListener('input', e => { ui.q = e.target.value; render(); });
+for (const k of ['hideR','hideM','all']) $('#'+k).addEventListener('click', e => {
+  ui[k] = !ui[k]; e.currentTarget.setAttribute('aria-pressed', ui[k]); render();
+});
+$('#shuffle').addEventListener('click', () => {
+  prog.seed = Math.floor(Math.random() * 1e9); prog.page = 0; prog.last = ''; ui.kpage = 0; ui.open.clear();
+  rebuild(); save(); render(); window.scrollTo(0, 0);
+});
+$('#tabStudy').addEventListener('click', () => { ui.tab = 'study'; render(); });
+$('#tabKnown').addEventListener('click', () => { ui.tab = 'known'; render(); });
+for (const id of ['#pagerTop', '#pagerBot']) $(id).addEventListener('click', e => {
+  const b = e.target.closest('button[data-p]'); if (!b || b.disabled) return;
+  setPage(+b.dataset.p); ui.open.clear(); render(); $('.tabs').scrollIntoView({block:'start'});
+});
+$('#list').addEventListener('click', e => {
+  const v = e.target.closest('.veil');
+  if (v){ const s = document.createElement('span'); s.className = v.dataset.cls; s.textContent = v.dataset.show; v.replaceWith(s); return; }
+  const c = e.target.closest('.chk');
+  if (c){
+    const w = WORDS[+c.dataset.k].w;
+    if (knownSet.has(w)) prog.known = prog.known.filter(x => x !== w); else prog.known.push(w);
+    rebuild(); save(); render(); return;
+  }
+  const j = e.target.closest('.jump');
+  if (j){
+    const to = +j.dataset.to;
+    ui.open.add(to); ui.q = ''; $('#q').value = '';
+    ui.tab = knownSet.has(WORDS[to].w) ? 'known' : 'study';
+    const at = curList().indexOf(to);
+    if (ui.tab === 'study') prog.page = Math.floor(at / PAGE); else ui.kpage = Math.floor(at / PAGE);
+    render();
+    const t = document.getElementById('w' + to);
+    t.scrollIntoView({block:'start'}); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1200);
+    return;
+  }
+  const h = e.target.closest('.head');
+  if (h){
+    const i = +h.dataset.i;
+    if (ui.tab === 'study'){ prog.last = WORDS[i].w; save(); }
+    if (ui.all) return;
+    ui.open.has(i) ? ui.open.delete(i) : ui.open.add(i);
+    const y = h.getBoundingClientRect().top;
+    render();
+    window.scrollBy(0, document.getElementById('w'+i).getBoundingClientRect().top - y);
+  }
+});
+try { const p = JSON.parse(localStorage.getItem(LS)); if (valid(p)) prog = {seed: p.seed, page: p.page || 0, last: p.last || '', known: p.known, t: p.t || 0}; } catch (e) {}
+fetch('words.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
+  WORDS = data; have = new Map(WORDS.map((d, i) => [d.w, i])); rebuild(); render(); resume();
+  setSync('진도(외운 단어 · 섞인 순서)는 이 브라우저에만 저장됩니다.');
+}).catch(() => { $('#list').innerHTML = '<p class="empty">단어 데이터를 불러오지 못했습니다. 페이지를 새로고침해 주세요.</p>'; });
+</script>
+</body>
+</html>
